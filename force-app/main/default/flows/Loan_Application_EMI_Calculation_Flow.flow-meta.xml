@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>65.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Set_EMI_Amount</name>
+        <label>Set EMI Amount</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.EMI_Amount__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>EMI_Calculation</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <environments>Default</environments>
+    <formulas>
+        <name>EMI_Calculation</name>
+        <dataType>Number</dataType>
+        <expression>(
+  {!$Record.Approved_Amount__c} * {!$Record.Interest_Rate__c}/ 1200
+) +
+(
+  {!$Record.Approved_Amount__c}/ {!$Record.Tenure__c}
+)</expression>
+        <scale>2</scale>
+    </formulas>
+    <interviewLabel>Loan Application EMI Calculation Flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Loan Application EMI Calculation Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Set_EMI_Amount</targetReference>
+        </connector>
+        <filterFormula>OR(
+  ISCHANGED({!$Record.Approved_Amount__c}),
+  ISCHANGED({!$Record.Interest_Rate__c}),
+  ISCHANGED({!$Record.Tenure__c})
+)</filterFormula>
+        <object>Loan_Application__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

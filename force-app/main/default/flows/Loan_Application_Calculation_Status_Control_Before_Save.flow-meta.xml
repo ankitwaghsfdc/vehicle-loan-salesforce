@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>65.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Set_Values_High_Risk</name>
+        <label>Set Values – High Risk</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Approved_Amount__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>HighRiskApprovedLimit</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Set_Values_Low_Risk</name>
+        <label>Set Values – Low Risk</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Approved_Amount__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Requested_Amount__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Interest_Rate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <numberValue>8.0</numberValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Set_Values_Medium_Risk</name>
+        <label>Set Values – Medium Risk</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Approved_Amount__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>MediupRiskApprovedLimit</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Interest_Rate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <numberValue>10.0</numberValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <name>Check_Risk_Category</name>
+        <label>Check Risk Category</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Low_Risk</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Risk_Category__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Low</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Values_Low_Risk</targetReference>
+            </connector>
+            <label>Low Risk</label>
+        </rules>
+        <rules>
+            <name>Medium_Risk</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Risk_Category__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Medium</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Values_Medium_Risk</targetReference>
+            </connector>
+            <label>Medium Risk</label>
+        </rules>
+        <rules>
+            <name>High_Risk</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Risk_Category__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>High</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Values_High_Risk</targetReference>
+            </connector>
+            <label>High Risk</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <formulas>
+        <name>HighRiskApprovedLimit</name>
+        <dataType>Number</dataType>
+        <expression>{!$Record.Requested_Amount__c} * 0.6</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
+        <name>MediupRiskApprovedLimit</name>
+        <dataType>Number</dataType>
+        <expression>$Record.Requested_Amount__c * 0.8</expression>
+        <scale>2</scale>
+    </formulas>
+    <interviewLabel>Loan Application Calculation &amp; Status Control (Before Save) {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Loan Application Calculation &amp; Status Control (Before Save)</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Check_Risk_Category</targetReference>
+        </connector>
+        <filterFormula>OR(
+  ISCHANGED({!$Record.Requested_Amount__c}),
+  ISCHANGED({!$Record.Risk_Category__c})
+)</filterFormula>
+        <object>Loan_Application__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>
