@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RM_Comment__c</fullName>
+    <description>Remarks added by the Relationship Manager during lead review.</description>
+    <inlineHelpText>Optional remarks provided by RM while approving or rejecting the lead.</inlineHelpText>
+    <label>RM Comment</label>
+    <length>1000</length>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
+</CustomField>
