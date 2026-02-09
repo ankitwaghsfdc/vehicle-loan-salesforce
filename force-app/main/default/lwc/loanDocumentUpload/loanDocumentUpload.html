@@ -1,0 +1,30 @@
+<template>
+    <lightning-card title="Loan Documents" icon-name="doctype:attachment">
+        <div class="slds-p-around_medium">
+
+            <lightning-file-upload
+                label="Upload Documents"
+                name="loanDocs"
+                record-id={recordId}
+                multiple
+                accept={acceptedFormats}
+                onuploadfinished={handleUploadFinished}>
+            </lightning-file-upload>
+
+            <template if:true={uploadedFiles}>
+<div class="uploaded-files">
+    <p class="section-title">Uploaded Files</p>
+
+                    <ul class="slds-list_dotted slds-m-top_small">
+                        <template for:each={uploadedFiles} for:item="file">
+                            <li key={file.documentId}>
+                                {file.name}
+                            </li>
+                        </template>
+                    </ul>
+                </div>
+            </template>
+
+        </div>
+    </lightning-card>
+</template>
