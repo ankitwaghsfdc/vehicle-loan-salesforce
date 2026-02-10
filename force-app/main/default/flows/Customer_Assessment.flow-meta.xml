@@ -3,22 +3,6 @@
     <apiVersion>65.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
-        <name>Customer_Assessment_Stage_Change</name>
-        <label>Customer Assessment Stage Change</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>Get_Opportunity.Loan_Process_Stage__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Agreement Generation</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Customer_Assessment_Completed</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>HighRisk1</name>
         <label>HighRisk1</label>
         <locationX>0</locationX>
@@ -679,7 +663,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Customer_Assessment_Stage_Change</targetReference>
+                <targetReference>Update_Opportunity</targetReference>
             </connector>
             <label>End Customer Assesment</label>
         </rules>
@@ -727,6 +711,54 @@
         <object>Opportunity</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordUpdates>
+        <name>Update_Opportunity</name>
+        <label>Update Opportunity</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Customer_Assessment_Completed</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Aadhar_Verification_Status__c</field>
+            <value>
+                <elementReference>aadhaarStatus</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Loan_Process_Stage__c</field>
+            <value>
+                <stringValue>Agreement Generation</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Name_Match_Status__c</field>
+            <value>
+                <elementReference>nameMatchStatus</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PAN_Verification_Status__c</field>
+            <value>
+                <elementReference>panStatus</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Risk_Category__c</field>
+            <value>
+                <elementReference>riskCatagory</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Opportunity</object>
+    </recordUpdates>
     <screens>
         <name>Customer_Assessment</name>
         <label>Customer Assessment</label>
