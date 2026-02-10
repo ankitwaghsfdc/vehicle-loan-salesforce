@@ -88,13 +88,6 @@
                 </componentInstanceProperties>
                 <componentName>flowruntime:interview</componentName>
                 <identifier>flowruntime_interview</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.Loan_Process_Stage__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Customer Assessment</rightValue>
-                    </criteria>
-                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <name>Facet-b93e2499-83f6-451b-a80f-92c255edd5d2</name>
