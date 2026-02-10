@@ -737,7 +737,7 @@
         </fields>
         <fields>
             <name>RiskSummary</name>
-            <fieldText>&lt;p&gt;Risk Assessment&lt;/p&gt;&lt;p&gt;Risk Category: {!&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;riskCatagory}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Risk Assessment&lt;/p&gt;&lt;p&gt;Risk Category: {!riskCatagory}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
