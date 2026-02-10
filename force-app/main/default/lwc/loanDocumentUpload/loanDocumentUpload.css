@@ -38,3 +38,16 @@
 lightning-file-upload {
     margin-top: 0.5rem;
 }
+
+table {
+    width: 100%;
+}
+
+td {
+    vertical-align: middle;
+}
+
+a {
+    color: #0176d3;
+    font-weight: 500;
+}

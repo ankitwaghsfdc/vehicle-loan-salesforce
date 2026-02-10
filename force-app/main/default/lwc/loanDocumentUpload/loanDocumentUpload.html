@@ -1,29 +1,72 @@
+<!--
+  File Name    : loanDocumentUpload.html
+  Component    : loanDocumentUpload
+  Purpose      : 
+    UI layer for controlled document upload on Opportunity.
+    Displays a document checklist (Aadhaar, PAN, RC, etc.)
+    with individual upload and view actions for each document.
+
+  Used In      :
+    Opportunity Lightning Record Page (Documents Tab)
+
+  Description :
+    - Renders a table-based document checklist
+    - Uses lightning-file-upload for Salesforce Files integration
+    - Shows View link for uploaded documents
+    - Designed for RM usage during loan processing
+
+  Author       : Ankit Wagh
+-->
+
+
 <template>
     <lightning-card title="Loan Documents" icon-name="doctype:attachment">
         <div class="slds-p-around_medium">
 
-            <lightning-file-upload
-                label="Upload Documents"
-                name="loanDocs"
-                record-id={recordId}
-                multiple
-                accept={acceptedFormats}
-                onuploadfinished={handleUploadFinished}>
-            </lightning-file-upload>
+            <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+                <thead>
+                    <tr>
+                        <th scope="col">Document Type</th>
+                        <th scope="col">Upload</th>
+                        <th scope="col">View</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={documents} for:item="doc">
+                        <tr key={doc.key}>
+                            <td>{doc.label}</td>
 
-            <template if:true={uploadedFiles}>
-<div class="uploaded-files">
-    <p class="section-title">Uploaded Files</p>
+                            <td>
+                                <lightning-file-upload
+    record-id={recordId}
+    data-doctype={doc.key}
+    accept={acceptedFormats}
+    onuploadfinished={handleUploadFinished}
+    disabled={isSubmitted}>
+</lightning-file-upload>
 
-                    <ul class="slds-list_dotted slds-m-top_small">
-                        <template for:each={uploadedFiles} for:item="file">
-                            <li key={file.documentId}>
-                                {file.name}
-                            </li>
-                        </template>
-                    </ul>
-                </div>
-            </template>
+                            </td>
+
+                            <td>
+                                <template if:true={doc.fileUrl}>
+                                    <a href={doc.fileUrl} target="_blank">View</a>
+                                </template>
+                                <template if:false={doc.fileUrl}>
+                                    —
+                                </template>
+                            </td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+            <div class="slds-m-top_medium slds-text-align_right">
+    <lightning-button
+        label="Submit Documents"
+        variant="brand"
+        onclick={handleSubmitDocuments}
+        disabled={isSubmitDisabled}>
+    </lightning-button>
+</div>
 
         </div>
     </lightning-card>
