@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Loan_Process_Stage__c</fullName>
+    <label>Loan Process Stage</label>
+    <required>true</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Document Upload</fullName>
+                <default>true</default>
+                <label>Document Upload</label>
+            </value>
+            <value>
+                <fullName>Customer Assessment</fullName>
+                <default>false</default>
+                <label>Customer Assessment</label>
+            </value>
+            <value>
+                <fullName>Agreement Generation</fullName>
+                <default>false</default>
+                <label>Agreement Generation</label>
+            </value>
+            <value>
+                <fullName>Agreement Signed</fullName>
+                <default>false</default>
+                <label>Agreement Signed</label>
+            </value>
+            <value>
+                <fullName>Disbursement</fullName>
+                <default>false</default>
+                <label>Disbursement</label>
+            </value>
+            <value>
+                <fullName>Disbursed</fullName>
+                <default>false</default>
+                <label>Disbursed</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
