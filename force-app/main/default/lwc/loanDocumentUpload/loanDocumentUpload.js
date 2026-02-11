@@ -76,8 +76,4 @@ handleSubmitDocuments() {
             console.error('Error updating loan stage', error);
         });
 }
-
-
-
 }
-

@@ -2,6 +2,144 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>65.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Dowload_URL_Genreation</name>
+        <label>Dowload URL Genreation</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>DownloadURL</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>DocumentURLFormula</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Success_Screen</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>EMI_Calculation</name>
+        <label>EMI Calculation</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>MonthlyEMI</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>MonthlyEMICalculation</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loan_Agreement_Preview</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>InterestAndTenure1</name>
+        <label>InterestAndTenure1</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>InterestRate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <numberValue>9.0</numberValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>LoanTenureMonths</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <numberValue>60.0</numberValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>eligibleLoanAmount</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>loanAmountCalculation1</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Monthly_Rate_Calculation</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>InterestAndTenure2</name>
+        <label>InterestAndTenure2</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>InterestRate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <numberValue>11.0</numberValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>LoanTenureMonths</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <numberValue>48.0</numberValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>eligibleLoanAmount</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>loanAmountCalculation2</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Monthly_Rate_Calculation</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>InterestAndTenure3</name>
+        <label>InterestAndTenure3</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>InterestRate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <numberValue>14.0</numberValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>LoanTenureMonths</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <numberValue>36.0</numberValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>eligibleLoanAmount</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>loanAmountCalculation3</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Monthly_Rate_Calculation</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Monthly_Rate_Calculation</name>
+        <label>Monthly Rate Calculation</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>MonthlyRate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>MonthlyRateCalculation</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>EMI_Calculation</targetReference>
+        </connector>
+    </assignments>
     <customProperties>
         <name>ScreenProgressIndicator</name>
         <value>
@@ -10,7 +148,7 @@
     </customProperties>
     <decisions>
         <name>Already_Completed</name>
-        <label>Already Completed</label>
+        <label>Already Completed Check</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
@@ -54,7 +192,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Stage_Navigation</targetReference>
+            <targetReference>Monthly_Rate_Calculation</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -68,7 +206,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Stage_Navigation</targetReference>
+                <targetReference>InterestAndTenure1</targetReference>
             </connector>
             <label>Low Risk Loan</label>
         </rules>
@@ -83,7 +221,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Stage_Navigation</targetReference>
+                <targetReference>InterestAndTenure2</targetReference>
             </connector>
             <label>Medium Risk Loan</label>
         </rules>
@@ -98,7 +236,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Stage_Navigation</targetReference>
+                <targetReference>InterestAndTenure3</targetReference>
             </connector>
             <label>High Risk Loan</label>
         </rules>
@@ -108,6 +246,9 @@
         <label>Stage Navigation</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Update_Opportunity</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Early_Entry2</name>
@@ -195,6 +336,48 @@
         </rules>
     </decisions>
     <environments>Default</environments>
+    <formulas>
+        <name>DocumentURLFormula</name>
+        <dataType>String</dataType>
+        <expression>&quot;/apex/LoanAgreementPDF?id=&quot; &amp; {!recordId}</expression>
+    </formulas>
+    <formulas>
+        <name>LoanAgreementTitle</name>
+        <dataType>String</dataType>
+        <expression>&apos;Loan Agreement&apos; &amp; {!Get_Opportunity.Name}</expression>
+    </formulas>
+    <formulas>
+        <name>loanAmountCalculation1</name>
+        <dataType>Number</dataType>
+        <expression>{!Get_Opportunity.Vehicle_MRP__c}*(0.8)</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
+        <name>loanAmountCalculation2</name>
+        <dataType>Number</dataType>
+        <expression>{!Get_Opportunity.Vehicle_MRP__c}*(0.65)</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
+        <name>loanAmountCalculation3</name>
+        <dataType>Number</dataType>
+        <expression>{!Get_Opportunity.Vehicle_MRP__c}*(0.5)</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
+        <name>MonthlyEMICalculation</name>
+        <dataType>Currency</dataType>
+        <expression>{!eligibleLoanAmount}* {!MonthlyRate}*
+((1 + {!MonthlyRate}) ^ {!LoanTenureMonths}) /
+(((1 + {!MonthlyRate}) ^ {!LoanTenureMonths}) - 1)</expression>
+        <scale>4</scale>
+    </formulas>
+    <formulas>
+        <name>MonthlyRateCalculation</name>
+        <dataType>Number</dataType>
+        <expression>{!InterestRate}/1200</expression>
+        <scale>4</scale>
+    </formulas>
     <interviewLabel>Loan Agreement Generation {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Loan Agreement Generation</label>
     <processMetadataValues>
@@ -217,6 +400,29 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordLookups>
+        <name>Get_Document</name>
+        <label>Get Document</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Dowload_URL_Genreation</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>LinkedEntityId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>ContentDocumentLink</object>
+        <sortField>SystemModstamp</sortField>
+        <sortOrder>Desc</sortOrder>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_Opportunity</name>
         <label>Get Opportunity</label>
         <locationX>0</locationX>
@@ -237,6 +443,54 @@
         <object>Opportunity</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordUpdates>
+        <name>Update_Opportunity</name>
+        <label>Update Opportunity</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Document</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>EMI_Amount__c</field>
+            <value>
+                <elementReference>MonthlyEMI</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Eligible_Loan_Amount__c</field>
+            <value>
+                <elementReference>eligibleLoanAmount</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Interest_Rate__c</field>
+            <value>
+                <elementReference>InterestRate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Loan_Process_Stage__c</field>
+            <value>
+                <stringValue>Agreement Signed</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Loan_Tenure_Months__c</field>
+            <value>
+                <elementReference>LoanTenureMonths</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Opportunity</object>
+    </recordUpdates>
     <screens>
         <name>Agreement_Already_Generated</name>
         <label>Agreement Already Generated</label>
@@ -285,6 +539,58 @@
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
+    <screens>
+        <name>Loan_Agreement_Preview</name>
+        <label>Loan Agreement Preview</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Stage_Navigation</targetReference>
+        </connector>
+        <fields>
+            <name>LoanSummary</name>
+            <fieldText>&lt;p&gt;Loan Agreement Summary&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Eligible Loan Amount: ₹ {!eligibleLoanAmount}&lt;/p&gt;&lt;p&gt;Number of EMIs: {!LoanTenureMonths}&lt;/p&gt;&lt;p&gt;Monthly EMI: ₹ {!MonthlyEMI}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Please review the details before generating the loan agreement.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <nextOrFinishButtonLabel>Generate Loan Agreement</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Success_Screen</name>
+        <label>Success Screen</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>SuccessMessage</name>
+            <fieldText>&lt;p&gt;Loan Agreement Generated Successfully!&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;https://creative-hawk-i37we-dev-ed.trailblaze.lightning.force.com/apex/LoanAgreementPDF?id={!recordId}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;color: rgb(1, 68, 134); background-color: rgb(255, 255, 255);&quot;&gt;Download Loan Agreement&lt;/a&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
@@ -294,12 +600,51 @@
     </start>
     <status>Active</status>
     <variables>
+        <name>DownloadURL</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>eligibleLoanAmount</name>
+        <dataType>Currency</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>2</scale>
+    </variables>
+    <variables>
         <name>InterestRate</name>
         <dataType>Number</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <scale>2</scale>
+    </variables>
+    <variables>
+        <name>LoanTenureMonths</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+    </variables>
+    <variables>
+        <name>MonthlyEMI</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>2</scale>
+    </variables>
+    <variables>
+        <name>MonthlyRate</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>4</scale>
     </variables>
     <variables>
         <name>recordId</name>

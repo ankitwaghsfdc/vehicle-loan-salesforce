@@ -1,0 +1,125 @@
+<apex:page standardController="Opportunity"
+           renderAs="pdf"
+           showHeader="false"
+           applyBodyTag="false"
+           applyHtmlTag="false">
+
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+        }
+        .title {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .section {
+            margin-top: 15px;
+        }
+        .signature {
+            margin-top: 60px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        td {
+            padding: 6px;
+        }
+        .label {
+            font-weight: bold;
+            width: 40%;
+        }
+        .box {
+            border: 1px solid #000;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="title">
+    VEHICLE LOAN AGREEMENT
+</div>
+
+<div class="section">
+This Loan Agreement ("Agreement") is made on the date of execution between:
+</div>
+
+<div class="section box">
+<b>Lender:</b> ABC Finance Limited<br/>
+<b>Borrower:</b> {!Opportunity.Name}
+</div>
+
+<div class="section">
+WHEREAS the Borrower has requested financial assistance for the purchase of a vehicle, and the Lender has agreed to grant such assistance subject to the terms and conditions contained herein.
+</div>
+
+<div class="section">
+<h3>Loan Details</h3>
+<table border="1">
+<tr>
+    <td class="label">Sanctioned Loan Amount</td>
+    <td>₹ {!Opportunity.Eligible_Loan_Amount__c}</td>
+</tr>
+<tr>
+    <td class="label">Interest Rate (Annual)</td>
+    <td>{!Opportunity.Interest_Rate__c}%</td>
+</tr>
+<tr>
+    <td class="label">Loan Tenure</td>
+    <td>{!Opportunity.Loan_Tenure_Months__c} Months</td>
+</tr>
+<tr>
+    <td class="label">Monthly EMI</td>
+    <td>₹ {!Opportunity.EMI_Amount__c}</td>
+</tr>
+</table>
+</div>
+
+<div class="section">
+<h3>Terms &amp; Conditions</h3>
+
+1. The Borrower agrees to repay the sanctioned loan amount along with applicable interest through monthly instalments (EMIs) as specified above.  
+2. The Borrower shall ensure timely payment of each EMI on or before the due date.  
+3. Any delay in payment may attract penal interest as per lender policy.  
+4. The loan shall be secured against the financed vehicle until full repayment.  
+5. The Borrower confirms that all information provided during assessment is true and accurate.  
+6. The Lender reserves the right to initiate recovery proceedings in case of default.  
+</div>
+
+<div class="section">
+<h3>Declaration</h3>
+The Borrower hereby declares that he/she has read, understood, and agreed to all terms and conditions mentioned in this Agreement.
+</div>
+
+<div class="signature">
+<table>
+<tr>
+    <td>
+        ___________________________<br/>
+        Borrower Signature
+    </td>
+    <td style="text-align:right;">
+        ___________________________<br/>
+        Authorized Signatory<br/>
+        ABC Finance Limited
+    </td>
+</tr>
+</table>
+</div>
+
+<div class="section" style="margin-top:40px; font-size:10px;">
+This is a system-generated document and does not require physical signature unless mandated by regulatory compliance.
+</div>
+
+</body>
+</html>
+
+</apex:page>
