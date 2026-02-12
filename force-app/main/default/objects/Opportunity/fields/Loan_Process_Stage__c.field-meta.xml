@@ -40,6 +40,11 @@
                 <default>false</default>
                 <label>Disbursed</label>
             </value>
+            <value>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+                <label>Rejected</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
